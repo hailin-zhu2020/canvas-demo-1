@@ -11,12 +11,30 @@
 </head>
 
 <body>
+    <!-- /* id选择器可作为全局属性 */ -->
     <div id="canvas"></div>
     <script>
-        /* id选择器可作为全局属性 */
+        /* 先知道点的位置 */
         canvas.onclick = (e) => {
             /* console.log调试大法 */
-            console.log(e)
+            console.log(e.clientX)
+            console.log(e.clientY)
+                /* 在点的位置出现一个圆坨坨 */
+            let div = document.createElement('div')
+            div.style.position = 'absolute'
+            div.style.left = e.clientX + 'px'
+            div.style.top = e.clientY + 'px'
+            div.style.width = '6px'
+            div.style.height = '6px'
+                /*将鼠标放在div的中心位置 */
+            div.style.marginLeft = '-3px'
+            div.style.marginTop = '-3px'
+            div.style.borderRadius = '50%'
+            div.style.background = 'black'
+                /* 将新产生的div添加到画板中，不然只在内存中 */
+            canvas.appendChild(div)
+
+
         }
     </script>
 </body>
