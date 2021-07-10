@@ -11,30 +11,37 @@
 </head>
 
 <body>
-    <!-- /* id选择器可作为全局属性 */ -->
-    <div id="canvas"></div>
+    <!--  -->
+    <canvas id="canvas" width="100" height="100"></canvas>
     <script>
-        /* 先知道点的位置 */
-        canvas.onclick = (e) => {
-            /* console.log调试大法 */
-            console.log(e.clientX)
-            console.log(e.clientY)
-                /* 在点的位置出现一个圆坨坨 */
-            let div = document.createElement('div')
-            div.style.position = 'absolute'
-            div.style.left = e.clientX + 'px'
-            div.style.top = e.clientY + 'px'
-            div.style.width = '6px'
-            div.style.height = '6px'
-                /*将鼠标放在div的中心位置 */
-            div.style.marginLeft = '-3px'
-            div.style.marginTop = '-3px'
-            div.style.borderRadius = '50%'
-            div.style.background = 'black'
-                /* 将新产生的div添加到画板中，不然只在内存中 */
-            canvas.appendChild(div)
+        let canvas = document.getElementById("canvas");
+        //canvas的宽高是在一开始就确定的，如果在css中改的话，会强行拉伸，导致画质模糊;因此一开始就要设置宽高
+        canvas.width = document.documentElement.clientWidth;
+        canvas.height = document.documentElement.clientHeight;
 
+        let painting = false;
+        //画线
+        let ctx = canvas.getContext("2d");
 
+        ctx.fillStyle = "black";
+        ctx.strokeStyle = "none";
+
+        canvas.onmousemove = (e) => {
+            if (painting === true) {
+                ctx.beginPath();
+                ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.fill();
+            } else {
+                console.log("什么都不做")
+            }
+        };
+        // 当鼠标按下的时候就开始画，当鼠标弹起的时候就不画
+        canvas.onmousedown = () => {
+            painting = true;
+        }
+        canvas.onmouseup = () => {
+            painting = false;
         }
     </script>
 </body>
